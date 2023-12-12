@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * @author : Keerthana Talla
  */
 public class BuildYourOwn extends AppCompatActivity {
-    private RadioGroup sizeGroup; 
+    private RadioGroup sizeGroup;
     private Pizza selectedPizza;
     private RadioGroup sauceGroup;
     private CheckBox extraSauce;
@@ -63,7 +63,7 @@ public class BuildYourOwn extends AppCompatActivity {
         sizeGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
             /**
-             * Sets the size based on user input 
+             * Sets the size based on user input
              * @param group radiogroup for size
              * @param checkedId checkbox selected
              */
@@ -79,7 +79,7 @@ public class BuildYourOwn extends AppCompatActivity {
         sauceGroup = findViewById(R.id.sauceGroup);
         sauceGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             /**
-             * Sets the size based on user input 
+             * Sets the size based on user input
              * @param group  radiogroup for sauce
              * @param checkedId checkbox selected
              */
@@ -94,13 +94,13 @@ public class BuildYourOwn extends AppCompatActivity {
             }
         });
 
-        
+
         extraSauce = findViewById(R.id.extraSauce);
         extraSauce.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             /**
              * Checks whether or not extra sauce option is selected from user input
-             * @param compoundButton button group for extra sauce 
-             * @param b true or false 
+             * @param compoundButton button group for extra sauce
+             * @param b true or false
              */
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -119,8 +119,8 @@ public class BuildYourOwn extends AppCompatActivity {
         extraCheese.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             /**
              * Checks whether or not extra cheese option is selected from user input
-             * @param compoundButton button group for extra cheese 
-             * @param b true or false 
+             * @param compoundButton button group for extra cheese
+             * @param b true or false
              */
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -139,9 +139,9 @@ public class BuildYourOwn extends AppCompatActivity {
         sausage = findViewById(R.id.sausage);
         sausage.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             /**
-             * Checks whether or not sausage option is selected and adds to Topping array 
-             * @param compoundButton button group for toppings checkbox 
-             * @param b true if selected, false if not 
+             * Checks whether or not sausage option is selected and adds to Topping array
+             * @param compoundButton button group for toppings checkbox
+             * @param b true if selected, false if not
              */
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -163,9 +163,9 @@ public class BuildYourOwn extends AppCompatActivity {
         pepperoni = findViewById(R.id.pepperoni);
         pepperoni.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             /**
-             * Checks whether or not pepperoni option is selected and adds to Topping array 
-             * @param compoundButton button group for toppings checkbox 
-             * @param b true if selected, false if not 
+             * Checks whether or not pepperoni option is selected and adds to Topping array
+             * @param compoundButton button group for toppings checkbox
+             * @param b true if selected, false if not
              */
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -452,8 +452,8 @@ public class BuildYourOwn extends AppCompatActivity {
         placeOrder = findViewById(R.id.buildYourOwn_placeOrder);
         placeOrder.setOnClickListener(new View.OnClickListener() {
             /**
-             * Places order based on user input and includes error handling based on incorrect input  
-             * @param view total user input 
+             * Places order based on user input and includes error handling based on incorrect input
+             * @param view total user input
              */
             @Override
             public void onClick(View view) {
@@ -487,8 +487,8 @@ public class BuildYourOwn extends AppCompatActivity {
     }
 
     /**
-     * Method for error handling alerts 
-     * @param s string for alert message 
+     * Method for error handling alerts
+     * @param s string for alert message
      */
     protected void alertMessage(String s) {
         AlertDialog.Builder builder = new AlertDialog.Builder(BuildYourOwn.this);

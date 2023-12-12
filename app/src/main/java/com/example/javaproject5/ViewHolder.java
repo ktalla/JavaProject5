@@ -16,7 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * ViewHolder Class that is required for the RecyclerView
+ * @author Keerthana Talla
+ */
 public class ViewHolder extends RecyclerView.ViewHolder {
 
 //    private static final String[] specialPizzas = {"Deluxe", "Supreme", "Meatzza", "Seafood", "Pepperoni"};
@@ -29,6 +32,10 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 //     Singleton singleton = Singleton.getInstance();
 
 
+    /**
+     * UI to display pizza title, image, and toppings
+     * @param itemView to display pizza
+     */
     public ViewHolder(@NonNull View itemView) {
         super(itemView);
         pizzaImage = itemView.findViewById(R.id.imageview);
@@ -37,6 +44,11 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 
     }
 
+    /**
+     * method to set toppings and append using String Builder
+     * @param toppings of array list type
+     * @param sauce tomato or alfredo
+     */
     public void setToppings(List<Topping> toppings, Sauce sauce) {
         StringBuilder toppingsText = new StringBuilder();
         toppingsText.append("Toppings: ");

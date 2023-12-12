@@ -3,10 +3,19 @@ package com.example.javaproject5;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Stores Information about a Grandma Pizza
+ * addAllToppings for this option
+ * @author Keerthana Talla
+ * @author Ishani Mhatre
+ */
 public class GrandmaPizza extends Pizza{
     private static String pizzaType = "Grandma"; //case of supreme speciality pizza
     private static ArrayList<Topping> topping = new ArrayList<>(Arrays.asList(Topping.CRAB_MEAT, Topping.PEPPERONI, Topping.JALAPENOS, Topping.GREEN_PEPPER, Topping.SHRIMP, Topping.BLACK_OLIVE, Topping.MUSHROOM));
 
+    /**
+     * public constructor to avoid errors
+     */
     public GrandmaPizza(){
         super();
         this.addAllTopings();
@@ -14,6 +23,9 @@ public class GrandmaPizza extends Pizza{
 
     }
 
+    /**
+     * method to add all relevant toppings for this pizza type
+     */
     private void addAllTopings() {
         addTopping(Topping.CRAB_MEAT);
         addTopping(Topping.PEPPERONI);

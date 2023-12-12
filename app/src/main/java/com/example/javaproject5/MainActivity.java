@@ -7,12 +7,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
+/**
+ * Main Activity class for the main page of the app
+ * @author Keerthana Talla
+ * @author Ishani Mhatre
+ */
 public class MainActivity extends AppCompatActivity {
     ImageButton specialtyPizzas;
     ImageButton buildYourOwn;
     ImageButton yourCart;
     ImageButton storeOrders;
 
+    /**
+     * Method for all activities on the main page
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +33,10 @@ public class MainActivity extends AppCompatActivity {
         storeOrders = (ImageButton) findViewById(R.id.storeOrdersButton);
 
         specialtyPizzas.setOnClickListener(new View.OnClickListener() {
+            /**
+             * method to open speciality pizza activity page when clicking on this option
+             * @param v user input
+             */
             @Override
             public void onClick(View v){
                 Intent intent = new Intent(MainActivity.this, SpecialtyPizzas.class);
@@ -32,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         buildYourOwn.setOnClickListener(new View.OnClickListener() {
+            /**
+             * method to open build your own pizza activity page when clicking on this option
+             * @param v user input
+             */
             @Override
             public void onClick(View v){
                 Intent intent = new Intent(MainActivity.this, BuildYourOwn.class);
@@ -40,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         yourCart.setOnClickListener(new View.OnClickListener() {
+            /**
+             * method to open cart when clicking on this option
+             * @param v user input
+             */
             @Override
             public void onClick(View v){
                 Intent intent = new Intent(MainActivity.this, YourCart.class);
@@ -48,17 +69,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
         storeOrders.setOnClickListener(new View.OnClickListener() {
+            /**
+             * method to open store orders  page when clicking on this option
+             * @param v user input
+             */
             @Override
             public void onClick(View v){
                 Intent intent = new Intent(MainActivity.this, StoreOrdersActivity.class);
                 startActivity(intent);
             }
         });
-
-
-
-
-
 
 
     }

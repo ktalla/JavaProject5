@@ -18,9 +18,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 /**
- * Build Your Own Activity allows for users to customize pizzas and add to their order
- * @author : Ishani Mhatre
- * @author : Keerthana Talla
+ * Class that allows user to create a buildyourown pizza
+ * @author Ishani Mhatre
+ * @author Keerthana Talla
  */
 public class BuildYourOwn extends AppCompatActivity {
     private RadioGroup sizeGroup;
@@ -45,11 +45,11 @@ public class BuildYourOwn extends AppCompatActivity {
     private CheckBox bacon;
     private Singleton singleton = Singleton.getInstance();
 
-    @SuppressLint({"MissingInflatedId", "WrongViewCast"})
-
     /**
-     * Creates new pizza object of type build your own. Sets initial price to 0
+     * Method to handle activity for this page
+     * @param savedInstanceState based on user input
      */
+    @SuppressLint({"MissingInflatedId", "WrongViewCast"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,91 +58,143 @@ public class BuildYourOwn extends AppCompatActivity {
         selectedPizza = pizzaMaker.createPizza("buildyourown");
         price = findViewById(R.id.price_byo);
         price.setText("0.00");
-
         sizeGroup = findViewById(R.id.sizeGroup);
-        sizeGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        sauceGroup = findViewById(R.id.sauceGroup);
+        extraSauce = findViewById(R.id.extraSauce);
+        extraCheese = findViewById(R.id.extraCheese);
+        handleSizeGroupAction();
+        handleSauceGroupAction();
+        handleExtraCheeseSauceAction();
+        sausage = findViewById(R.id.sausage);
+        handleSausageSelection();
+        pepperoni = findViewById(R.id.pepperoni);
+        handlePepperoniSelection();
+        greenpepper = findViewById(R.id.greenpepper);
+        handleGreenPepperSelection();
+        onion = findViewById(R.id.onion);
+        handleOnionSelection();
+        mushroom = findViewById(R.id.mushroom);
+        handleMushroomSelection();
+        ham = findViewById(R.id.ham);
+        handleHamSelection();
+        olives = findViewById(R.id.olives);
+        handleOlivesSelection();
+        beef = findViewById(R.id.beef);
+        handleBeefSelection();
+        shrimp = findViewById(R.id.shrimp);
+        handleShrimpSelection();
+        crabmeat = findViewById(R.id.crabmeat);
+        handleCrabMeatSelection();
+        jalapeneos = findViewById(R.id.jalapenos);
+        handleJalapenosSelection();
+        squid = findViewById(R.id.squid);
+        handleSquidSelection();
+        bacon = findViewById(R.id.bacon);
+        handleBaconSelection();
+        placeOrder = findViewById(R.id.buildYourOwn_placeOrder);
+        handlePlaceOrderAction();
+    }
 
-            /**
-             * Sets the size based on user input
-             * @param group radiogroup for size
-             * @param checkedId checkbox selected
-             */
+    /**
+     * Method to change size based on user input and update pizza price
+     */
+    private void handleSizeGroupAction(){
+        sizeGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                // Find the selected radio button
                 RadioButton selectedSize = group.findViewById(checkedId);
                 String selectedText = selectedSize.getText().toString();
                 selectedPizza.setSize(selectedText);
                 price.setText(selectedPizza.price()+"");
             }
         });
-        sauceGroup = findViewById(R.id.sauceGroup);
+    }
+
+    /**
+     * Method to change sauce based on user input and update pizza price
+     */
+    private void handleSauceGroupAction(){
         sauceGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            /**
-             * Sets the size based on user input
-             * @param group  radiogroup for sauce
-             * @param checkedId checkbox selected
-             */
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                // Find the selected radio button
                 RadioButton selectedSauce = group.findViewById(checkedId);
                 String selectedText = selectedSauce.getText().toString();
                 selectedPizza.setSauce(selectedText);
                 //Log.d("Sauce set: ", selectedPizza.getSauce().toString());
-                price.setText(selectedPizza.price()+"");
+               // price.setText(selectedPizza.price() + "");
             }
         });
+    }
 
-
-        extraSauce = findViewById(R.id.extraSauce);
+    /**
+     * Method to change option for extra cheese and sauce based on user input
+     * Updates the price accordingly 
+     */
+    private void handleExtraCheeseSauceAction(){
         extraSauce.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            /**
-             * Checks whether or not extra sauce option is selected from user input
-             * @param compoundButton button group for extra sauce
-             * @param b true or false
-             */
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(compoundButton.isChecked()){
-                    selectedPizza.setExtraSauce(true);
-                    price.setText(selectedPizza.price()+"");
+                if(selectedPizza.getSize()!=null) {
+                    if (compoundButton.isChecked()) {
+                        selectedPizza.setExtraSauce(true);
+                        price.setText(selectedPizza.price() + "");
+                    } else {
+                        selectedPizza.setExtraSauce(false);
+                        price.setText(selectedPizza.price() + "");
+                    }
                 }
                 else{
-                    selectedPizza.setExtraSauce(false);
-                    price.setText(selectedPizza.price()+"");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(BuildYourOwn.this);
+                    builder.setMessage("Please select a size");
+                    builder.setTitle("Alert!");
+                    builder.setNeutralButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
+                        dialog.cancel();
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                    extraSauce.setChecked(false);
                 }
             }
         });
-
-        extraCheese = findViewById(R.id.extraCheese);
         extraCheese.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
             /**
-             * Checks whether or not extra cheese option is selected from user input
-             * @param compoundButton button group for extra cheese
-             * @param b true or false
+             * Method to set extra cheese as true or false and change price 
+             * @param compoundButton radio group
+             * @param b true or false 
              */
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(compoundButton.isChecked()){
-                    selectedPizza.setExtraCheese(true);
-                    price.setText(selectedPizza.price()+"");
+                if(selectedPizza.getSize()!=null) {
+                    if (compoundButton.isChecked()) {
+                        selectedPizza.setExtraCheese(true);
+                        price.setText(selectedPizza.price() + "");
+                    } else {
+                        selectedPizza.setExtraCheese(false);
+                        price.setText(selectedPizza.price() + "");
+                    }
                 }
                 else{
-                    selectedPizza.setExtraCheese(false);
-                    price.setText(selectedPizza.price()+"");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(BuildYourOwn.this);
+                    builder.setMessage("Please select a size");
+                    builder.setTitle("Alert!");
+                    builder.setNeutralButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
+                        dialog.cancel();
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                    extraCheese.setChecked(false);
                 }
             }
         });
+    }
 
-        //Pizza toppings
-        sausage = findViewById(R.id.sausage);
+    /**
+     * Method to add sausage to topping array for pizza based on user input
+     * Creates alert if size is not selected before
+     */
+    private void handleSausageSelection(){
         sausage.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            /**
-             * Checks whether or not sausage option is selected and adds to Topping array
-             * @param compoundButton button group for toppings checkbox
-             * @param b true if selected, false if not
-             */
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(selectedPizza.getSize()!=null) {
@@ -155,18 +207,26 @@ public class BuildYourOwn extends AppCompatActivity {
                     }
                 }
                 else{
-                    alertMessage("Please select a size");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(BuildYourOwn.this);
+                    builder.setMessage("Please select a size");
+                    builder.setTitle("Alert!");
+                    builder.setNeutralButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
+                        dialog.cancel();
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                    sausage.setChecked(false);
                 }
             }
         });
+    }
 
-        pepperoni = findViewById(R.id.pepperoni);
+    /**
+     * Method to add pepperoni to topping array for pizza based on user input
+     * Creates alert if size is not selected before
+     */
+    private void handlePepperoniSelection(){
         pepperoni.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            /**
-             * Checks whether or not pepperoni option is selected and adds to Topping array
-             * @param compoundButton button group for toppings checkbox
-             * @param b true if selected, false if not
-             */
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(selectedPizza.getSize()!=null) {
@@ -179,18 +239,26 @@ public class BuildYourOwn extends AppCompatActivity {
                     }
                 }
                 else{
-                    alertMessage("Please select a size");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(BuildYourOwn.this);
+                    builder.setMessage("Please select a size");
+                    builder.setTitle("Alert!");
+                    builder.setNeutralButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
+                        dialog.cancel();
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                    pepperoni.setChecked(false);
                 }
             }
         });
+    }
 
-        greenpepper = findViewById(R.id.greenpepper);
+    /**
+     * Method to add green pepper to topping array for pizza based on user input
+     * Creates alert if size is not selected before
+     */
+    private void handleGreenPepperSelection(){
         greenpepper.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            /**
-             * Checks whether or not green pepper option is selected and adds to Topping array
-             * @param compoundButton button group for toppings checkbox
-             * @param b true if selected, false if no
-             */
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(selectedPizza.getSize()!=null) {
@@ -203,18 +271,26 @@ public class BuildYourOwn extends AppCompatActivity {
                     }
                 }
                 else{
-                    alertMessage("Please select a size");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(BuildYourOwn.this);
+                    builder.setMessage("Please select a size");
+                    builder.setTitle("Alert!");
+                    builder.setNeutralButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
+                        dialog.cancel();
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                    greenpepper.setChecked(false);
                 }
             }
         });
+    }
 
-        onion = findViewById(R.id.onion);
+    /**
+     * Method to add onion to topping array for pizza based on user input
+     * Creates alert if size is not selected before
+     */
+    private void handleOnionSelection(){
         onion.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            /**
-             * Checks whether or not onion option is selected and adds to Topping array
-             * @param compoundButton button group for toppings checkbox
-             * @param b true if selected, false if no
-             */
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(selectedPizza.getSize()!=null) {
@@ -227,18 +303,26 @@ public class BuildYourOwn extends AppCompatActivity {
                     }
                 }
                 else{
-                    alertMessage("Please select a size");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(BuildYourOwn.this);
+                    builder.setMessage("Please select a size");
+                    builder.setTitle("Alert!");
+                    builder.setNeutralButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
+                        dialog.cancel();
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                    onion.setChecked(false);
                 }
             }
         });
+    }
 
-        mushroom = findViewById(R.id.mushroom);
+    /**
+     * Method to add mushroom to topping array for pizza based on user input
+     * Creates alert if size is not selected before
+     */
+    private void handleMushroomSelection(){
         mushroom.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            /**
-             * Checks whether or not mushroom option is selected and adds to Topping array
-             * @param compoundButton button group for toppings checkbox
-             * @param b true if selected, false if no
-             */
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(selectedPizza.getSize()!=null) {
@@ -251,18 +335,26 @@ public class BuildYourOwn extends AppCompatActivity {
                     }
                 }
                 else{
-                    alertMessage("Please select a size");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(BuildYourOwn.this);
+                    builder.setMessage("Please select a size");
+                    builder.setTitle("Alert!");
+                    builder.setNeutralButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
+                        dialog.cancel();
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                    mushroom.setChecked(false);
                 }
             }
         });
+    }
 
-        ham = findViewById(R.id.ham);
+    /**
+     * Method to add ham to topping array for pizza based on user input
+     * Creates alert if size is not selected before
+     */
+    private void handleHamSelection(){
         ham.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            /**
-             * Checks whether or not ham option is selected and adds to Topping array
-             * @param compoundButton button group for toppings checkbox
-             * @param b true if selected, false if no
-             */
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(selectedPizza.getSize()!=null) {
@@ -275,18 +367,26 @@ public class BuildYourOwn extends AppCompatActivity {
                     }
                 }
                 else{
-                    alertMessage("Please select a size");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(BuildYourOwn.this);
+                    builder.setMessage("Please select a size");
+                    builder.setTitle("Alert!");
+                    builder.setNeutralButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
+                        dialog.cancel();
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                    ham.setChecked(false);
                 }
             }
         });
+    }
 
-        olives = findViewById(R.id.olives);
+    /**
+     * Method to add black olives to topping array for pizza based on user input
+     * Creates alert if size is not selected before
+     */
+    private void handleOlivesSelection(){
         olives.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            /**
-             * Checks whether or not black olives option is selected and adds to Topping array
-             * @param compoundButton button group for toppings checkbox
-             * @param b true if selected, false if no
-             */
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(selectedPizza.getSize()!=null) {
@@ -299,18 +399,26 @@ public class BuildYourOwn extends AppCompatActivity {
                     }
                 }
                 else{
-                    alertMessage("Please select a size");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(BuildYourOwn.this);
+                    builder.setMessage("Please select a size");
+                    builder.setTitle("Alert!");
+                    builder.setNeutralButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
+                        dialog.cancel();
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                    olives.setChecked(false);
                 }
             }
         });
+    }
 
-        beef = findViewById(R.id.beef);
+    /**
+     * Method to add beef to topping array for pizza based on user input
+     * Creates alert if size is not selected before
+     */
+    private void handleBeefSelection(){
         beef.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            /**
-             * Checks whether or not beef option is selected and adds to Topping array
-             * @param compoundButton button group for toppings checkbox
-             * @param b true if selected, false if no
-             */
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(selectedPizza.getSize()!=null) {
@@ -323,18 +431,26 @@ public class BuildYourOwn extends AppCompatActivity {
                     }
                 }
                 else{
-                    alertMessage("Please select a size");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(BuildYourOwn.this);
+                    builder.setMessage("Please select a size");
+                    builder.setTitle("Alert!");
+                    builder.setNeutralButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
+                        dialog.cancel();
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                    beef.setChecked(false);
                 }
             }
         });
+    }
 
-        shrimp = findViewById(R.id.shrimp);
+    /**
+     * Method to add shrimp to topping array for pizza based on user input
+     * Creates alert if size is not selected before
+     */
+    private void handleShrimpSelection(){
         shrimp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            /**
-             * Checks whether or not shrimp option is selected and adds to Topping array
-             * @param compoundButton button group for toppings checkbox
-             * @param b true if selected, false if no
-             */
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(selectedPizza.getSize()!=null) {
@@ -347,18 +463,26 @@ public class BuildYourOwn extends AppCompatActivity {
                     }
                 }
                 else{
-                    alertMessage("Please select a size");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(BuildYourOwn.this);
+                    builder.setMessage("Please select a size");
+                    builder.setTitle("Alert!");
+                    builder.setNeutralButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
+                        dialog.cancel();
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                    shrimp.setChecked(false);
                 }
             }
         });
+    }
 
-        crabmeat = findViewById(R.id.crabmeat);
+    /**
+     * Method to add crab meat to topping array for pizza based on user input
+     * Creates alert if size is not selected before
+     */
+    private void handleCrabMeatSelection(){
         crabmeat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            /**
-             * Checks whether or not crabmeat option is selected and adds to Topping array
-             * @param compoundButton button group for toppings checkbox
-             * @param b true if selected, false if no
-             */
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(selectedPizza.getSize()!=null) {
@@ -371,18 +495,26 @@ public class BuildYourOwn extends AppCompatActivity {
                     }
                 }
                 else{
-                    alertMessage("Please select a size");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(BuildYourOwn.this);
+                    builder.setMessage("Please select a size");
+                    builder.setTitle("Alert!");
+                    builder.setNeutralButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
+                        dialog.cancel();
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                    crabmeat.setChecked(false);
                 }
             }
         });
+    }
 
-        jalapeneos = findViewById(R.id.jalapenos);
+    /**
+     * Method to add jalapeno to topping array for pizza based on user input
+     * Creates alert if size is not selected before
+     */
+    private void handleJalapenosSelection(){
         jalapeneos.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            /**
-             * Checks whether or not jalapenos option is selected and adds to Topping array
-             * @param compoundButton button group for toppings checkbox
-             * @param b true if selected, false if no
-             */
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(selectedPizza.getSize()!=null) {
@@ -395,18 +527,26 @@ public class BuildYourOwn extends AppCompatActivity {
                     }
                 }
                 else{
-                    alertMessage("Please select a size");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(BuildYourOwn.this);
+                    builder.setMessage("Please select a size");
+                    builder.setTitle("Alert!");
+                    builder.setNeutralButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
+                        dialog.cancel();
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                    jalapeneos.setChecked(false);
                 }
             }
         });
+    }
 
-        squid = findViewById(R.id.squid);
+    /**
+     * Method to add squid to topping array for pizza based on user input
+     * Creates alert if size is not selected before
+     */
+    private void handleSquidSelection(){
         squid.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            /**
-             * Checks whether or not squid option is selected and adds to Topping array
-             * @param compoundButton button group for toppings checkbox
-             * @param b true if selected, false if no
-             */
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(selectedPizza.getSize()!=null) {
@@ -419,18 +559,26 @@ public class BuildYourOwn extends AppCompatActivity {
                     }
                 }
                 else{
-                    alertMessage("Please select a size");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(BuildYourOwn.this);
+                    builder.setMessage("Please select a size");
+                    builder.setTitle("Alert!");
+                    builder.setNeutralButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
+                        dialog.cancel();
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                    squid.setChecked(false);
                 }
             }
         });
+    }
 
-        bacon = findViewById(R.id.bacon);
+    /**
+     * Method to add bacon to topping array for pizza based on user input
+     * Creates alert if size is not selected before
+     */
+    private void handleBaconSelection(){
         bacon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            /**
-             * Checks whether or not bacon option is selected and adds to Topping array
-             * @param compoundButton button group for toppings checkbox
-             * @param b true if selected, false if no
-             */
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(selectedPizza.getSize()!=null) {
@@ -443,21 +591,28 @@ public class BuildYourOwn extends AppCompatActivity {
                     }
                 }
                 else{
-                    alertMessage("Please select a size");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(BuildYourOwn.this);
+                    builder.setMessage("Please select a size");
+                    builder.setTitle("Alert!");
+                    builder.setNeutralButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
+                        dialog.cancel();
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                    bacon.setChecked(false);
                 }
             }
         });
+    }
 
-        //Place Order
-        placeOrder = findViewById(R.id.buildYourOwn_placeOrder);
+    /**
+     * Method to place order based on user input
+     * Alerts will appear if there are any errors such as insufficient information
+     */
+    private void handlePlaceOrderAction(){
         placeOrder.setOnClickListener(new View.OnClickListener() {
-            /**
-             * Places order based on user input and includes error handling based on incorrect input
-             * @param view total user input
-             */
             @Override
             public void onClick(View view) {
-                Log.d("Topping array", selectedPizza.toString()+"");
                 if (selectedPizza.getSize()==null || selectedPizza.getSauce()==null || selectedPizza.getToppings().size() < 3 || selectedPizza.getToppings().size() > 7) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(BuildYourOwn.this);
                     builder.setMessage("Please select a size, sauce, and 3-7 toppings.");
@@ -467,12 +622,16 @@ public class BuildYourOwn extends AppCompatActivity {
                     });
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
-                } else { Order order = singleton.getOrder();
-                    if (order == null) {order = new Order(new ArrayList<Pizza>());
+                } else {
+                    Order order = singleton.getOrder();
+                    if (order == null) {
+                        order = new Order(new ArrayList<Pizza>());
                         singleton.setOrder(order);
                     }
                     order.addPizza(selectedPizza);
                     singleton.setOrder(order);
+                    //Log.d("Success", singleton.getOrder().toString());
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(BuildYourOwn.this);
                     builder.setMessage("Pizza Ordered!");
                     builder.setTitle("Success! Order Number: " + singleton.getCurrentOrderNum());
@@ -484,20 +643,5 @@ public class BuildYourOwn extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    /**
-     * Method for error handling alerts
-     * @param s string for alert message
-     */
-    protected void alertMessage(String s) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(BuildYourOwn.this);
-        builder.setMessage(s);
-        builder.setTitle("Alert!");
-        builder.setNeutralButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
-            dialog.cancel();
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
     }
 }

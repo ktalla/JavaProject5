@@ -3,16 +3,27 @@ package com.example.javaproject5;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Stores Information about a Baddie Pizza
+ * addAllToppings for this option
+ * @author Keerthana Talla
+ */
 public class BaddiePizza extends Pizza {
     private static String pizzaType = "Baddie"; //case of supreme speciality pizza
     private static ArrayList<Topping> topping = new ArrayList<>(Arrays.asList(Topping.SAUSAGE, Topping.PEPPERONI, Topping.JALAPENOS, Topping.MUSHROOM, Topping.ONION));
 
+    /**
+     * public constructor for this class
+     */
     public BaddiePizza(){
         super();
         this.addAllTopings();
         this.setSauce("tomato");
     }
 
+    /**
+     * method to add all toppings
+     */
     private void addAllTopings() {
         addTopping(Topping.PEPPERONI);
         addTopping(Topping.JALAPENOS);
